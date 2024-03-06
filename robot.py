@@ -76,6 +76,7 @@ def bot():
         print("  - Enter 'w' to place a wall")
         print("  - Enter 'up', 'down', 'left', or 'right' to move the robot")
         print("  - Enter 'q' to quit")
+        print("  - Enter 'c' to navigate in the challenges")
 
         r1.place_wall(4, 8)
         r1.place_wall(5, 9)
@@ -91,6 +92,8 @@ def bot():
             wall_y = int(input("Enter wall's x-coordinate: "))
             wall_x = int(input("Enter wall's y-coordinate: "))
             r1.place_wall(wall_x, wall_y)
+        elif command == 'c':
+            challenges()
         else:
             r1.move(command)
 
@@ -174,5 +177,5 @@ def challenges():
     if selection == 1:
         challengeBeta()
 
-challenges()
-#bot()
+
+bot()
