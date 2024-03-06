@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 import sys
 
@@ -56,9 +58,9 @@ class Bot:
         return 0 <= pos[0] < self.board.shape[0] and 0 <= pos[1] < self.board.shape[1]
 
 def clear_console():
-    # Clear console screen using ANSI escape codes
-    sys.stdout.write("\033[H\033[J")
-    sys.stdout.flush()
+    # Print a sufficient number of empty lines to simulate clearing the console
+    print("\n" * 100)
+
 
 def bot():
     posX = 5  # Specify initial x-coordinate
@@ -92,4 +94,85 @@ def bot():
         else:
             r1.move(command)
 
-bot()
+
+def challengeBeta():
+    clear_console()
+    print("Welcome to the Beta Challenger!\n")
+    print("Your challenge is to modify the code below to make the bot navigate to the goal position (marked as 'G').")
+    print("You can modify the Bot class methods and add any additional functions you need.")
+    print("Use the move() method to control the bot's movement.")
+    print("Once you think your code is correct, type 'done' to test it.")
+    print("-----------------------------------")
+    time.sleep(10)
+    print('Starting in 5 seconds...')
+    time.sleep(5)
+
+    # Initial bot position
+    posX = 5
+    posY = 8
+
+    # Create bot instance
+    r1 = Bot('on', posX, posY)
+
+    # Define the goal position
+    goal_pos = [0, 0]  # Change this to the desired goal position
+
+    # Place goal position on the board
+    r1.board[goal_pos[0], goal_pos[1]] = 'G'
+
+    # Game loop
+    while True:
+        clear_console()
+
+        # Print board and instructions
+        print("---------------------------------")
+        print("Instructions:")
+        print("  - Modify the code to navigate the bot to the goal position (marked as 'G').")
+        print("  - Type 'done' to test your code.")
+        print("  - Hint: The bot name is r1")
+        print("---------------------------------")
+        print(r1.board)
+
+        # Get user input
+        code = input("Write your code here:\n")
+
+        # Check if the user wants to test their code
+        if code.strip().lower() == 'done':
+            break
+
+        # Execute user's code
+        try:
+            exec(code)
+        except Exception as e:
+            print("Error executing code:", e)
+
+    # Move the bot according to the user's code
+    try:
+        exec(code)
+    except Exception as e:
+        print("Error executing code:", e)
+
+    # Check if the bot reached the goal position
+    if r1.robot_pos == goal_pos:
+        clear_console()
+        clear_console()
+        print("Congratulations! Your code successfully navigated the bot to the goal position.")
+        time.sleep(5)
+        challenges()
+    else:
+        print("Oops! Your code didn't navigate the bot to the goal position. Try again.")
+
+
+
+def challenges():
+    clear_console()
+    print("Welcome to the challenges section !\nHere you can select a challenge and try to complete it.")
+    print("----------------------------------\nSelect a challenge:\n")
+    selection = int(input("1: Beta Challenger\n>  "))
+    while selection < 1 or selection > 1:
+        selection = int(input("Please choose an existing challenge"))
+    if selection == 1:
+        challengeBeta()
+
+challenges()
+#bot()
